@@ -168,7 +168,7 @@ echo "export PATH=\"\$HOME/.gem/ruby/1.9.1/bin:\$PATH\"" > $build_dir/.profile.d
     npm install gulp
     echo "-----> Found gulpfile, running gulp heroku:$NODE_ENV task"
     cat $build_dir/gulpfile.js
-    $build_dir/node_modules/.bin/gulp heroku:$NODE_ENV
+    $build_dir/node_modules/.bin/gulp heroku
   else
     echo "-----> No gulpfile found"
   fi
