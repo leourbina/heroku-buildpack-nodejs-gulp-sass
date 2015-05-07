@@ -129,7 +129,9 @@ fi
 
 # install sass
 status "Installing Sass"
-export GEM_HOME=$build_dir/.gem/ruby/1.9.1
+
+# ask gem for its gem paths
+export GEM_HOME=$(ruby -r 'yaml' -e 'print YAML.load(%x{gem env})["RubyGems Environment"].detect{|k| k.keys.first == "GEM PATHS"}.values.flatten.last')
 PATH="$GEM_HOME/bin:$PATH"
 if test -d $cache_dir/ruby/.gem; then
     status "Restoring ruby gems directory from cache"
@@ -153,7 +155,7 @@ fi
 status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
-echo "export PATH=\"\$HOME/.gem/ruby/1.9.1/bin:\$PATH\"" > $build_dir/.profile.d/ruby.sh
+echo "export PATH=\"\$GEM_HOME/bin:\$PATH\"" > $build_dir/.profile.d/ruby.sh
 
 # Check and run gulp
 (
