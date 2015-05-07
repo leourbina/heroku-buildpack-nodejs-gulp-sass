@@ -129,9 +129,10 @@ fi
 
 # install sass
 status "Installing Sass"
-
+status $(gem env)
 # ask gem for its gem paths
 export GEM_HOME=$(ruby -r 'yaml' -e 'print YAML.load(%x{gem env})["RubyGems Environment"].detect{|k| k.keys.first == "GEM PATHS"}.values.flatten.last')
+status $GEM_HOME
 PATH="$GEM_HOME/bin:$PATH"
 if test -d $cache_dir/ruby/.gem; then
     status "Restoring ruby gems directory from cache"
